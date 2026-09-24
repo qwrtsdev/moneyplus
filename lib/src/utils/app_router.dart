@@ -1,27 +1,17 @@
 import 'package:go_router/go_router.dart';
+import 'package:moneyplus/src/pages/balance_page.dart';
+import 'package:moneyplus/src/pages/home_page.dart';
+import 'package:moneyplus/src/pages/settings_page.dart';
+import 'package:moneyplus/src/pages/split_bill_page.dart';
+import 'package:moneyplus/src/widgets/navigation_bar.dart';
 
-import 'package:moneyplus/src/screens/balance_screen.dart';
-import 'package:moneyplus/src/screens/finance_screen.dart';
-import 'package:moneyplus/src/screens/home_screen.dart';
-import 'package:moneyplus/src/screens/settings_screen.dart';
-import 'package:moneyplus/src/screens/split_bill_screen.dart';
-import 'package:moneyplus/src/widgets/scaffold_with_nav_bar.dart';
-
-/// App-wide route paths, kept as constants to avoid typos elsewhere.
 abstract class AppRoutes {
   static const home = '/';
-  static const finance = '/finance';
   static const balance = '/balance';
   static const splitBill = '/split-bill';
   static const settings = '/settings';
 }
 
-/// Declarative routing config. Uses [StatefulShellRoute.indexedStack] so
-/// each bottom-nav tab keeps its own navigation state when switching.
-///
-/// Every route uses [NoTransitionPage] rather than the default `builder:`
-/// (which wraps pages in a Material `MaterialPage`) — the app has no
-/// Material dependency, so routing shouldn't introduce one either.
 final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.home,
   routes: [
@@ -35,15 +25,6 @@ final GoRouter appRouter = GoRouter(
               path: AppRoutes.home,
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: HomeScreen()),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: AppRoutes.finance,
-              pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: FinanceScreen()),
             ),
           ],
         ),

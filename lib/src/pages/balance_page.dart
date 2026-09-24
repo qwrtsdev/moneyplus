@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:moneyplus/src/theme/app_typography.dart';
+import 'package:moneyplus/src/utils/app_theme.dart';
 import 'package:moneyplus/src/widgets/app_page.dart';
 
 class BalanceScreen extends StatelessWidget {

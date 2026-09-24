@@ -1,11 +1,57 @@
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
+import 'package:moneyplus/src/utils/app_theme.dart';
 
-import 'package:moneyplus/src/theme/app_colors.dart';
-import 'package:moneyplus/src/theme/app_radius.dart';
-import 'package:moneyplus/src/theme/app_typography.dart';
+class ScaffoldWithNavBar extends StatelessWidget {
+  const ScaffoldWithNavBar({super.key, required this.navigationShell});
 
-/// Icon pair (outline for inactive, filled for active) + label for a single
-/// destination in [BottomNavBar].
+  final StatefulNavigationShell navigationShell;
+
+  static const _items = [
+    BottomNavItem(
+      icon: PhosphorIconsRegular.houseSimple,
+      activeIcon: PhosphorIconsFill.houseSimple,
+      label: 'หน้าหลัก',
+    ),
+    BottomNavItem(
+      icon: PhosphorIconsRegular.piggyBank,
+      activeIcon: PhosphorIconsFill.piggyBank,
+      label: 'จัดการเงิน',
+    ),
+    BottomNavItem(
+      icon: PhosphorIconsRegular.receipt,
+      activeIcon: PhosphorIconsFill.receipt,
+      label: 'หารบิล',
+    ),
+    BottomNavItem(
+      icon: PhosphorIconsRegular.gearSix,
+      activeIcon: PhosphorIconsFill.gearSix,
+      label: 'ตั้งค่า',
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: AppColors.paper,
+      child: Column(
+        children: [
+          Expanded(child: navigationShell),
+          BottomNavBar(
+            items: _items,
+            currentIndex: navigationShell.currentIndex,
+            onTap: (index) => navigationShell.goBranch(
+              index,
+              initialLocation: index == navigationShell.currentIndex,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class BottomNavItem {
   const BottomNavItem({
     required this.icon,
@@ -18,10 +64,6 @@ class BottomNavItem {
   final String label;
 }
 
-/// A flat, full-width bottom bar — flush with the screen edge, no pill, no
-/// floating card, no Material `BottomNavigationBar`. The active tab is
-/// marked by a filled icon, bold label, and a thin sliding underline instead
-/// of a colored background.
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({
     super.key,
@@ -119,7 +161,9 @@ class _BottomNavButtonState extends State<_BottomNavButton> {
             const SizedBox(height: 4),
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 200),
-              style: selected ? AppTypography.navLabelActive : AppTypography.navLabel,
+              style: selected
+                  ? AppTypography.navLabelActive
+                  : AppTypography.navLabel,
               child: Text(widget.item.label),
             ),
           ],
